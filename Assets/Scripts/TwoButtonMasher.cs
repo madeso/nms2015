@@ -6,51 +6,41 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	public KeyCode LeftKeyCode = KeyCode.W;
 	public KeyCode RightKeyCode = KeyCode.S;
 
-	public AnimationCurve BeatMatch; /// how good you match the beat
-	public AnimationCurve SpeedInterval; /// how fast you move per beat
+
 	public float SpeedScale = 1; // how much you gean each press
 	public float DescreaseScale = 1; /// how fast the value decrease
 	public float MaxSpeed = 3;
+	public GlobalTwoButtonTweaks Tweak;
 
-	public float timer;
-	public float lastDelta = 0.0f;
-	private bool left = false;
-	public float value = 0.0f;
+	public float timer_;
+	public float lastDelta_ = 0.0f;
+	private bool left_ = false;
+	public float value_ = 0.0f;
 
 	// Use this for initialization
 	void Start () {
-		this.timer = 0.0f;
+		this.timer_ = 0.0f;
 	}
 
 	float Masher.GetValue() {
-		return value;
+		return value_;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		this.timer += Time.deltaTime;
-		this.value -= Time.deltaTime * this.DescreaseScale;
-		if( value < 0 ) value = 0;
-		var down = left ? Input.GetKey(this.LeftKeyCode) : Input.GetKey(this.RightKeyCode);
+		this.timer_ += Time.deltaTime;
+		this.value_ -= Time.deltaTime * this.DescreaseScale;
+		if( value_ < 0 ) value_ = 0;
+		var down = left_ ? Input.GetKey(this.LeftKeyCode) : Input.GetKey(this.RightKeyCode);
 		if( down == false ) return;
-		var delta = Mathf.Abs(timer)-Mathf.Abs(lastDelta);
-		this.value += RankDelta(timer, delta);
-		if( this.value > this.MaxSpeed ) {
-			this.value = this.MaxSpeed;
+		var delta = Mathf.Abs(timer_)-Mathf.Abs(lastDelta_);
+		this.value_ += this.Tweak.RankDelta(timer_, delta) * SpeedScale;
+		if( this.value_ > this.MaxSpeed ) {
+			this.value_ = this.MaxSpeed;
 			Debug.Log("Hit roof");
 		}
-		lastDelta = delta;
-		left = !left;
-		this.timer = 0;
-	}
-
-	float RankDelta (float d, float i)
-	{
-		var delta = Mathf.Abs(d);
-		var interval = Mathf.Abs(i);
-		var beatmatch = this.BeatMatch.Evaluate(interval);
-		var speedinterval = this.SpeedInterval.Evaluate(delta);
-		Debug.Log(string.Format("delta={0}, interval={1}, beatmatch={2}, imatch={3}", delta, interval, beatmatch, speedinterval));
-		return beatmatch * speedinterval * SpeedScale;
+		lastDelta_ = delta;
+		left_ = !left_;
+		this.timer_ = 0;
 	}
 }
