@@ -285,13 +285,18 @@ MonoBehaviour:
     m_Curve:
     - time: .00833333377
       value: .974999905
-      inSlope: -.997907817
-      outSlope: -.997907817
+      inSlope: -.174201399
+      outSlope: -.174201399
       tangentMode: 10
+    - time: .91064769
+      value: .817815483
+      inSlope: -.669483602
+      outSlope: -1.54686618
+      tangentMode: 1
     - time: 1.00416672
       value: -.0187499989
-      inSlope: -.997907817
-      outSlope: -.997907817
+      inSlope: -8.94540405
+      outSlope: -8.94540405
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -310,6 +315,9 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
+  SpeedScale: .5
+  DescreaseScale: 3
+  MaxSpeed: 2
 --- !u!114 &387775356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,13 +473,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftKeyCode: 119
   RightKeyCode: 115
-  SpeedScale: 2
-  DescreaseScale: 2
-  MaxSpeed: 1
   Tweak: {fileID: 387775355}
   timer_: 0
   lastDelta_: 0
   value_: 0
+  interval: 0
+  delta: 0
+  beatmach: 0
+  speedinterval: 0
 --- !u!114 &1070911899
 MonoBehaviour:
   m_ObjectHideFlags: 0
