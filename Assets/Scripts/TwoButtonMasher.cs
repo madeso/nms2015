@@ -57,7 +57,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 		this.value_ += this.RankDelta(timer_, delta) * this.Tweak.SpeedScale;
 		if( this.value_ > this.Tweak.MaxSpeed ) {
 			this.value_ = this.Tweak.MaxSpeed;
-			Debug.Log("Hit roof");
+			// Debug.Log("Hit roof");
 		}
 		lastDelta_ = this.timer_;
 		left_ = !left_;

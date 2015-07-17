@@ -5,9 +5,12 @@ public class PlayerPosition : MonoBehaviour {
 
 	private float position_ = 0;
 
-	int index_;
+	private int index_;
 
-	Masher masher;
+	private Masher masher;
+
+	public KeyCode UpKey;
+	public KeyCode DownKey;
 
 	public float Position {
 		get {
@@ -27,8 +30,21 @@ public class PlayerPosition : MonoBehaviour {
 	}
 
 	public void Update() {
+		if( this.players_.FeedPosition(this) ) return;
+
+		if( Input.GetKeyUp(this.UpKey) ) {
+			MoveUp(1);
+		}
+		if( Input.GetKeyUp(this.DownKey) ) {
+			MoveUp(-1);
+		}
 		position_ += this.masher.GetValue() * Time.deltaTime;
 		this.transform.position = this.players_.GetStartPosition(this.index_) + Vector3.right * position_;
+	}
+
+	void MoveUp (int i)
+	{
+		this.index_ = this.players_.Move(index_, i);
 	}
 
 	private Players players_;
