@@ -5,9 +5,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 
 	public KeyCode LeftKeyCode = KeyCode.W;
 	public KeyCode RightKeyCode = KeyCode.S;
-
-
-
+	
 	public GlobalTwoButtonTweaks Tweak;
 
 	public float timer_;
@@ -44,7 +42,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 		this.beatmach = beatmatch;
 		this.speedinterval = speedinterval;
 
-		Debug.Log(string.Format("delta={0}, interval={1}, beatmatch={2}, imatch={3}", delta, interval, beatmatch, speedinterval));
+		// Debug.Log(string.Format("delta={0}, interval={1}, beatmatch={2}, imatch={3}", delta, interval, beatmatch, speedinterval));
 		return beatmatch * speedinterval;
 	}
 	
