@@ -546,7 +546,7 @@ MonoBehaviour:
   SpeedScale: .5
   DescreaseScale: 3
   MaxSpeed: 1
-  PlayerWidth: .600000024
+  PlayerWidth: 1.20000005
   PushTime: .25
   PushSpeed: 5
 --- !u!114 &387775356
