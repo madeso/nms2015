@@ -30,18 +30,39 @@ public class Players : MonoBehaviour {
 		return winners_.Count > 0;
 	}
 
-	public int Move (int p, int i)
+	public int Move (PlayerPosition player, int track_change)
 	{
-		var np = p + i;
-		if( np < 0 ) return 0;
+		int next_track = GetNextTrack(player.track_index, track_change);
+		return next_track;
+	}
+
+	List<PlayerPosition>[] players_on_track_;
+
+	public void NotifyNewTrack (PlayerPosition player, int track_index)
+	{
+		foreach(var track in this.players_on_track_) {
+			track.Remove(player);
+		}
+		this.players_on_track_[track_index].Add(player);
+		// Debug.Log(string.Format ("Moved {0} to track {1}", player.name, track_index+1));
+	}
+
+	private int GetNextTrack (int current_track, int track_change)
+	{
+		var next_track = current_track + track_change;
+		if( next_track < 0 ) return 0;
 		var s = StartPositions.Length;
-		if( np >= s) return s-1;
-		return np;
+		if( next_track >= s) return s-1;
+		return next_track;
 	}
 
 	void Start() {
 		//UnityEngine.Assert.AreEqual
 		AssertAreEqual(this.StartPositions.Length, this.PlayerList.Length);
+		this.players_on_track_ = new List<PlayerPosition>[this.PlayerList.Length];
+		for(int i=0; i<this.PlayerList.Length; ++i) {
+			this.players_on_track_[i] = new List<PlayerPosition>();
+		}
 		int index = 0;
 		foreach(var pl in PlayerList) {
 			pl.Setup(this, index);

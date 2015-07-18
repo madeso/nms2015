@@ -6,6 +6,15 @@ public class PlayerPosition : MonoBehaviour {
 	private float position_on_track_ = 0;
 
 	private int track_index_;
+	public int track_index {
+		get {
+			return this.track_index_;
+		}
+		private set {
+			this.track_index_ = value;
+			this.players_.NotifyNewTrack(this, this.track_index_);
+		}
+	}
 
 	private Masher masher_;
 
@@ -21,7 +30,7 @@ public class PlayerPosition : MonoBehaviour {
 	public void Setup (Players players, int index)
 	{
 		this.players_ = players;
-		this.track_index_ = index;
+		this.track_index = index;
 	}
 
 	void Start() {
@@ -39,12 +48,12 @@ public class PlayerPosition : MonoBehaviour {
 			MoveUp(-1);
 		}
 		position_on_track_ += this.masher_.GetValue() * Time.deltaTime;
-		this.transform.position = this.players_.GetStartPosition(this.track_index_) + Vector3.right * position_on_track_;
+		this.transform.position = this.players_.GetStartPosition(this.track_index) + Vector3.right * position_on_track_;
 	}
 
 	void MoveUp (int i)
 	{
-		this.track_index_ = this.players_.Move(track_index_, i);
+		this.track_index = this.players_.Move(this, i);
 	}
 
 	private Players players_;
