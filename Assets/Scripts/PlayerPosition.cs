@@ -5,6 +5,11 @@ using System.Collections;
 /// Class containing the player data
 /// </summary>
 public class PlayerPosition : MonoBehaviour {
+
+
+	// true if the player is detected, false if not
+	public bool is_detected;
+
 	
 	public float position_on_track_ = 0;
 	
@@ -43,6 +48,12 @@ public class PlayerPosition : MonoBehaviour {
 			return new Rect(position_on_track_ - this.tweaks.PlayerWidth/2.0f, 0, this.tweaks.PlayerWidth, 1);
 		}
 	}
+
+	public void Penalize ()
+	{
+		this.position_on_track_ = 0.0f;
+		this.push_timer_ = 0.0f;
+	}
 	
 	public static bool IsOverlapping (PlayerPosition left, PlayerPosition right)
 	{
@@ -61,6 +72,13 @@ public class PlayerPosition : MonoBehaviour {
 		this.masher_ = this.GetComponent<Masher>();
 		if( this.masher_ == null ) throw new UnityException("no masher component on object");
 	}
+
+	private float push_speed {
+		get {
+			if( this.push_timer_ <= 0 ) return 0;
+			return this.tweaks.PushSpeed * (this.push_timer_/this.tweaks.PushTime);
+		}
+	}
 	
 	public void Update() {
 		if( this.players_.FeedPosition(this) ) return;
@@ -73,7 +91,7 @@ public class PlayerPosition : MonoBehaviour {
 		}
 		position_on_track_ += this.masher_.GetValue() * Time.deltaTime;
 		if( this.push_timer_ > 0 ) {
-			this.position_on_track_ += this.tweaks.PushSpeed * (this.push_timer_/this.tweaks.PushTime) * Time.deltaTime;
+			this.position_on_track_ += this.push_speed * Time.deltaTime;
 			this.push_timer_ -= Time.deltaTime;
 			if( this.push_timer_ <= 0 ) {
 				this.push_timer_ = 0;
@@ -89,6 +107,11 @@ public class PlayerPosition : MonoBehaviour {
 	{
 		this.push_timer_ += this.tweaks.PushTime;
 	}
+
+	public float GetSpeed() {
+		return this.masher_.GetValue() + this.push_speed;
+	}
+
 	
 	// direction is either -1 or +1 depending on the direction
 	void ChangeTrack (int direction)

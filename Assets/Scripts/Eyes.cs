@@ -55,12 +55,12 @@ public class Eyes : MonoBehaviour {
 
 		UpdateVisionConeMesh(start_position_latest_, end_position_latest_, track_y_latest);
 
-		/*
-		Debug.Log (string.Format("Detected {0} players", this.detected_players_.Count));
-		if( this.detected_players_.Count == 1 ) {
+
+		// Debug.Log (string.Format("Detected {0} players", this.detected_players_.Count));
+		/*if( this.detected_players_.Count == 1 ) {
 			Debug.Log (this.detected_players_[0].name);
-		}
-		*/
+		}*/
+
 	}
 
 	void CheckPlayer (PlayerPosition pla, float start, float end)
@@ -72,6 +72,13 @@ public class Eyes : MonoBehaviour {
 	}
 
 	List<PlayerPosition> detected_players_ = new List<PlayerPosition>();
+
+	public List<PlayerPosition> detected_players {
+		get {
+			return this.detected_players_;
+		}
+	}
+
 
 	GameObject visionconeobject_;
 

@@ -13,6 +13,7 @@ public class Players : MonoBehaviour {
 
 	public PlayerPosition[] PlayerList;
 	public GameObject[] StartPositions;
+	public Eyes[] Judges;
 
 	public static Players Find() {
 		var ch = GameObject.Find("Characters");
@@ -96,8 +97,9 @@ public class Players : MonoBehaviour {
 	{
 		return this.PlayerList.Length;
 	}
-
+	private Tweaks tweaks_;
 	public void Start() {
+		this.tweaks_ = Tweaks.Find();
 		Assert.AreEqual(this.StartPositions.Length, this.PlayerList.Length);
 		this.players_on_track_ = new List<PlayerPosition>[this.PlayerList.Length];
 		for(int i=0; i<this.PlayerList.Length; ++i) {
@@ -112,5 +114,24 @@ public class Players : MonoBehaviour {
 
 	public void Update() {
 		this.idle_timer_ += Time.deltaTime;
+
+		foreach(var pl in this.PlayerList) {
+			pl.is_detected = false;
+		}
+
+		foreach(var judge in this.Judges) {
+			foreach(var dp in judge.detected_players) {
+				dp.is_detected = true;
+
+				var speed = dp.GetSpeed();
+				if( speed > this.tweaks_.SpeedLimmit ) {
+					Debug.Log(string.Format("{0} penalized {1}", dp.name, speed));
+					dp.Penalize();
+				}
+				else {
+					Debug.Log (dp.name + " ok");
+				}
+			}
+		}
 	}
 }
