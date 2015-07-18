@@ -3,16 +3,17 @@ using System.Collections;
 
 public class PlayerPosition : MonoBehaviour {
 
-	private float position_on_track_ = 0;
+	public float position_on_track_ = 0;
 
-	private int track_index_;
+	private int track_index_ = -1;
 	public int track_index {
 		get {
 			return this.track_index_;
 		}
 		private set {
+			// Debug.Log (string.Format("Changing track index from {0} to {1}", this.track_index_, value));
+			this.players_.NotifyNewTrack(this, value);
 			this.track_index_ = value;
-			this.players_.NotifyNewTrack(this, this.track_index_);
 		}
 	}
 
@@ -21,14 +22,28 @@ public class PlayerPosition : MonoBehaviour {
 	public KeyCode UpKey;
 	public KeyCode DownKey;
 
+	GlobalTwoButtonTweaks tweaks;
+
 	public float Position {
 		get {
 			return this.position_on_track_;
 		}
 	}
 
+	public Rect PseudoRect {
+		get {
+			return new Rect(position_on_track_ - this.tweaks.PlayerWidth/2.0f, 0, this.tweaks.PlayerWidth, 1);
+		}
+	}
+
+	public static bool IsOverlapping (PlayerPosition left, PlayerPosition right)
+	{
+		return left.PseudoRect.Overlaps(right.PseudoRect);
+	}
+
 	public void Setup (Players players, int index)
 	{
+		this.tweaks = GlobalTwoButtonTweaks.Find();
 		this.players_ = players;
 		this.track_index = index;
 	}

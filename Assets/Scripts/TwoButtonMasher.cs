@@ -6,7 +6,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	public KeyCode LeftKeyCode = KeyCode.W;
 	public KeyCode RightKeyCode = KeyCode.S;
 	
-	public GlobalTwoButtonTweaks Tweak;
+	private GlobalTwoButtonTweaks tweaks;
 
 	public float timer_;
 	public float last_timer_ = 0.0f;
@@ -15,6 +15,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 
 	// Use this for initialization
 	void Start () {
+		this.tweaks = GlobalTwoButtonTweaks.Find();
 		this.timer_ = 0.0f;
 	}
 
@@ -34,8 +35,8 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	{
 		var delta = Mathf.Abs(d);
 		var interval = Mathf.Abs(i);
-		var beatmatch = this.Tweak.BeatMatch.Evaluate(interval);
-		var speedinterval = this.Tweak.SpeedInterval.Evaluate(delta);
+		var beatmatch = this.tweaks.BeatMatch.Evaluate(interval);
+		var speedinterval = this.tweaks.SpeedInterval.Evaluate(delta);
 
 		// debugging
 		this.interval_ = interval;
@@ -50,14 +51,14 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	// Update is called once per frame
 	void Update () {
 		this.timer_ += Time.deltaTime;
-		this.value_ -= Time.deltaTime * this.Tweak.DescreaseScale;
+		this.value_ -= Time.deltaTime * this.tweaks.DescreaseScale;
 		if( value_ < 0 ) value_ = 0;
 		var down = expecting_left_ ? Input.GetKey(this.LeftKeyCode) : Input.GetKey(this.RightKeyCode);
 		if( down == false ) return;
 		var delta = Mathf.Abs(timer_)-Mathf.Abs(last_timer_);
-		this.value_ += this.RankDelta(timer_, delta) * this.Tweak.SpeedScale;
-		if( this.value_ > this.Tweak.MaxSpeed ) {
-			this.value_ = this.Tweak.MaxSpeed;
+		this.value_ += this.RankDelta(timer_, delta) * this.tweaks.SpeedScale;
+		if( this.value_ > this.tweaks.MaxSpeed ) {
+			this.value_ = this.tweaks.MaxSpeed;
 			// Debug.Log("Hit roof");
 		}
 		last_timer_ = this.timer_;
