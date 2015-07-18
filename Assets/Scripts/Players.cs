@@ -3,12 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 //using UnityEngine.Assertions;
 
+/// <summary>
+///  Global object tracking the players and game logic things
+/// </summary>
 public class Players : MonoBehaviour {
 
 	public PlayerPosition[] PlayerList;
 	public GameObject[] StartPositions;
 
+	public static Players Find() {
+		var ch = GameObject.Find("Characters");
+		var pl = ch.GetComponent<Players>();
+		return pl;
+	}
+
 	public GameObject End;
+
+	// number of seconds that have elapsed since no input has been given
+	// reset game after some time have elapsed, 30 seconds?
+	private float idle_timer_ = 0;
+
+	public List<PlayerPosition>[] players_on_track_;
 
 	public Vector3 GetStartPosition (int index_)
 	{
@@ -30,7 +45,7 @@ public class Players : MonoBehaviour {
 		return winners_.Count > 0;
 	}
 
-	public int Move (PlayerPosition player, int track_change)
+	public int ChangeTrackForPlayer (PlayerPosition player, int track_change)
 	{
 		int next_track = GetNextTrack(player.track_index, track_change);
 		var track = players_on_track_[next_track];
@@ -42,7 +57,15 @@ public class Players : MonoBehaviour {
 		return next_track;
 	}
 
-	public List<PlayerPosition>[] players_on_track_;
+	public void OnPlayerMoved (PlayerPosition player)
+	{
+		this.idle_timer_ = 0;
+		foreach(var p in players_on_track_[player.track_index]) {
+			if( p != player && PlayerPosition.IsOverlapping(p, player) ) {
+				p.GetPushed();
+			}
+		}
+	}
 
 	public void NotifyNewTrack (PlayerPosition player, int track_index)
 	{
@@ -66,7 +89,12 @@ public class Players : MonoBehaviour {
 		return next_track;
 	}
 
-	void Start() {
+	public int GetNumberOfPlayers ()
+	{
+		return this.PlayerList.Length;
+	}
+
+	public void Start() {
 		//UnityEngine.Assert.AreEqual
 		AssertAreEqual(this.StartPositions.Length, this.PlayerList.Length);
 		this.players_on_track_ = new List<PlayerPosition>[this.PlayerList.Length];
@@ -78,6 +106,10 @@ public class Players : MonoBehaviour {
 			pl.Setup(this, index);
 			++index;
 		}
+	}
+
+	public void Update() {
+		this.idle_timer_ += Time.deltaTime;
 	}
 
 	private static void AssertAreEqual (int i, int i2)
