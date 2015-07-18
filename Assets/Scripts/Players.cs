@@ -7,6 +7,7 @@ using System.Collections.Generic;
 ///  Global object tracking the players and game logic things
 /// </summary>
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 
 public class Players : MonoBehaviour {
@@ -135,7 +136,20 @@ public class Players : MonoBehaviour {
 		}
 	}
 
+	public Text WinText;
+
+	IEnumerable<string> winners_names {
+		get {
+			foreach(var w in this.winners_) {
+				yield return w.name;
+			}
+		}
+	}
+
 	public void Update() {
+		this.WinText.text = this.winners_.Count == 0 ? ""
+			: string.Format("{0} won #nice", StringListCombiner.EnglishAnd.CombineFromEnumerable(this.winners_names));
+
 		this.idle_timer_ += Time.deltaTime;
 
 		foreach(var pl in this.PlayerList) {
