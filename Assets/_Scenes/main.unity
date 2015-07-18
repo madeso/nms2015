@@ -237,7 +237,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftKeyCode: 276
   RightKeyCode: 275
-  Tweak: {fileID: 387775355}
   timer_: 0
   last_timer_: 0
   value_: 0
@@ -256,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3522ddaa4b0a045bfa610fbf077d00a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position_on_track_: 0
   UpKey: 273
   DownKey: 274
 --- !u!1 &225906575
@@ -549,6 +549,7 @@ MonoBehaviour:
   SpeedScale: .5
   DescreaseScale: 3
   MaxSpeed: 1
+  PlayerWidth: .600000024
 --- !u!114 &387775356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,7 +716,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftKeyCode: 106
   RightKeyCode: 108
-  Tweak: {fileID: 387775355}
   timer_: 0
   last_timer_: 0
   value_: 0
@@ -734,6 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3522ddaa4b0a045bfa610fbf077d00a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position_on_track_: 0
   UpKey: 105
   DownKey: 107
 --- !u!1001 &906812999
@@ -878,7 +879,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftKeyCode: 97
   RightKeyCode: 100
-  Tweak: {fileID: 387775355}
   timer_: 0
   last_timer_: 0
   value_: 0
@@ -897,6 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3522ddaa4b0a045bfa610fbf077d00a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position_on_track_: 0
   UpKey: 119
   DownKey: 115
 --- !u!1 &1158611946
@@ -1176,7 +1177,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftKeyCode: 99
   RightKeyCode: 98
-  Tweak: {fileID: 387775355}
   timer_: 0
   last_timer_: 0
   value_: 0
@@ -1195,6 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3522ddaa4b0a045bfa610fbf077d00a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position_on_track_: 0
   UpKey: 102
   DownKey: 118
 --- !u!1 &1837975036
