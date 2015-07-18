@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Assertions;
+using System.Collections.Generic;
 
 public class Eyes : MonoBehaviour {
 	public float VisionConeAngle = 45;
@@ -29,6 +30,7 @@ public class Eyes : MonoBehaviour {
 		bool has = false;
 		this.movement_ += Time.deltaTime * this.SwingSpeed;
 
+		this.detected_players_.Clear();
 		foreach(var pos in this.players_.StartPositions ) {
 			var players = this.players_.players_on_track_[track];
 			var track_y = pos.transform.position.y;
@@ -52,11 +54,24 @@ public class Eyes : MonoBehaviour {
 		}
 
 		UpdateVisionConeMesh(start_position_latest_, end_position_latest_, track_y_latest);
+
+		/*
+		Debug.Log (string.Format("Detected {0} players", this.detected_players_.Count));
+		if( this.detected_players_.Count == 1 ) {
+			Debug.Log (this.detected_players_[0].name);
+		}
+		*/
 	}
 
 	void CheckPlayer (PlayerPosition pla, float start, float end)
 	{
+		var p = pla.transform.position.x;
+		if( p >= start && p < end ) {
+			this.detected_players_.Add(pla);
+		}
 	}
+
+	List<PlayerPosition> detected_players_ = new List<PlayerPosition>();
 
 	GameObject visionconeobject_;
 
