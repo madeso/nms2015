@@ -54,12 +54,7 @@ public class Eyes : MonoBehaviour {
 	{
 	}
 
-	public float start_ = 0;
-	public float end_ = 0;
-	public float y_ = 0;
 	GameObject visionconeobject_;
-
-	public Vector3 size_;
 
 	public Material VisionConeMaterial;
 
@@ -81,26 +76,23 @@ public class Eyes : MonoBehaviour {
 	void UpdateVisionConeMesh (float start, float end, float y)
 	{
 		CreateVisionCone ();
-		this.start_ = start;
-		this.end_ = end;
-		this.y_ = y;
 		var ex = this.gameObject.transform.position.x;
 		var ey = this.gameObject.transform.position.y;
 		var dx = -0.1f;
-		var rndr = this.visionconeobject_.GetComponent<MeshRenderer>();
 		var mesh = this.visionconeobject_.GetComponent<MeshFilter>().mesh;
 		mesh.Clear();
-		var z = 5;
+		var z = 1;
 		mesh.vertices = new Vector3[] {
 			new Vector3(ex-dx, ey, z), new Vector3(ex+dx, ey, z),
 			new Vector3(start, y, z), new Vector3(end, y, z)
 		};
 		mesh.uv = new Vector2[] {new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0)};
 		mesh.triangles = new int[] {2, 1, 0, 3, 2, 0};
-		var wi = ey;
-		var wo = ex;
-		this.size_ = rndr.bounds.size;
-		this.visionconeobject_.GetComponent<Mover>().SetPosition( this.transform.position - new Vector3(wo,wi,0) + new Vector3(0,0,-10));
+		var displacement_x = ex;
+		var displacement_y = ey;
+		var dsiplacement_z = 10;
+		this.visionconeobject_.GetComponent<Mover>().SetPosition( this.transform.position
+		                                                         - new Vector3(displacement_x,displacement_y,dsiplacement_z));
 
 
 		for(int i=0; i<3; ++i) {
