@@ -4,8 +4,12 @@ using UnityEngine.Assertions;
 
 public class Eyes : MonoBehaviour {
 	public float VisionConeAngle = 45;
-	public float movement_ = -90;
+	private float movement_ = 0;
 	private Players players_;
+
+	public float SwingSpeed = 1;
+	public float SwingRadius = 45;
+	public float SwingDisplace = 0;
 
 
 	private static float GetGroundDistance(float height, float angle) {
@@ -23,7 +27,7 @@ public class Eyes : MonoBehaviour {
 		float end_position_latest_ = 0;
 		float track_y_latest = 0;
 		bool has = false;
-		this.movement_ += Time.deltaTime;
+		this.movement_ += Time.deltaTime * this.SwingSpeed;
 
 		foreach(var pos in this.players_.StartPositions ) {
 			var players = this.players_.players_on_track_[track];
@@ -31,7 +35,7 @@ public class Eyes : MonoBehaviour {
 			var height = Mathf.Abs( track_y - this.transform.position.y );
 			Assert.IsTrue(height>0);
 			Debug.DrawLine(this.transform.position, pos.transform.position, Color.cyan);
-			var movement = Mathf.Sin (this.movement_) * 45;
+			var movement = Mathf.Sin (this.movement_) * this.SwingRadius + this.SwingDisplace;
 			var start_position = GetGroundDistance(height, movement);
 			var end_position = GetGroundDistance(height, movement + this.VisionConeAngle);
 
@@ -73,14 +77,14 @@ public class Eyes : MonoBehaviour {
 		renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 	}
 
-
+	public float EyeWidth = 0.1f;
 
 	void UpdateVisionConeMesh (float start, float end, float y)
 	{
 		CreateVisionCone ();
 		var ex = this.gameObject.transform.position.x;
 		var ey = this.gameObject.transform.position.y;
-		var dx = 0.1f;
+		var dx = this.EyeWidth / 2.0f;
 		var mesh = this.visionconeobject_.GetComponent<MeshFilter>().mesh;
 		mesh.Clear();
 		var z = 1;
@@ -96,7 +100,6 @@ public class Eyes : MonoBehaviour {
 		var dsiplacement_z = 10;
 		this.visionconeobject_.GetComponent<Mover>().SetPosition( this.transform.position
 		                                                         - new Vector3(displacement_x,displacement_y,dsiplacement_z));
-
 
 		for(int i=0; i<3; ++i) {
 			Debug.DrawLine(mesh.vertices[0], mesh.vertices[i], Color.black);

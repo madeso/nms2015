@@ -647,11 +647,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VisionConeAngle: 10
-  movement_: 0
-  start_: 0
-  end_: 0
-  y_: 0
+  SwingSpeed: 1
+  SwingRadius: 50
+  SwingDisplace: -5
   VisionConeMaterial: {fileID: 2100000, guid: e19c3743d6f9a4beaac40b8505c2c19b, type: 2}
+  EyeWidth: .100000001
 --- !u!4 &477193272
 Transform:
   m_ObjectHideFlags: 0
