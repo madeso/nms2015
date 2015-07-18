@@ -17,4 +17,7 @@ public class Tweaks : MonoBehaviour {
 	public float MaxSpeed = 3;
 
 	public float PlayerWidth = 3;
+
+	public float PushTime = 1;
+	public float PushSpeed = 1;
 }

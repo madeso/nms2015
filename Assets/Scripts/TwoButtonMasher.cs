@@ -8,10 +8,10 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	
 	private Tweaks tweaks;
 
-	public float timer_;
-	public float last_timer_ = 0.0f;
+	private float timer_;
+	private float last_timer_ = 0.0f;
 	private bool expecting_left_ = false;
-	public float value_ = 0.0f;
+	private float value_ = 0.0f;
 
 	// Use this for initialization
 	void Start () {
