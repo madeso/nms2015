@@ -51,8 +51,8 @@ public class Players : MonoBehaviour {
 	{
 		var next_track = current_track + track_change;
 		if( next_track < 0 ) return 0;
-		var s = StartPositions.Length;
-		if( next_track >= s) return s-1;
+		var total_number_of_tracks = StartPositions.Length;
+		if( next_track >= total_number_of_tracks) return total_number_of_tracks-1;
 		return next_track;
 	}
 
