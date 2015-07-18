@@ -15,6 +15,27 @@ public class Players : MonoBehaviour {
 	public GameObject[] StartPositions;
 	public Eyes[] Judges;
 
+	private bool IsTrackFree(int track) {
+		var rect = PlayerPosition.CalculatePseudoRect(track, this.tweaks_);
+		var mytrack = this.players_on_track_[track];
+		return mytrack.Count == 0;
+		/*
+		foreach(var pl in mytrack) {
+			if( rect.Overlaps(pl.PseudoRect) ) return false;
+		}
+		return true;*/
+	}
+
+	public int FindFirstFreeTrack (int track_index_, int start_track_index_)
+	{
+		if( IsTrackFree(track_index_) ) return track_index_;
+		if( IsTrackFree(start_track_index_) ) return start_track_index_;
+		for(int track=0; track<PlayerList.Length; ++track) {
+			if( IsTrackFree(track) ) return track;
+		}
+		return track_index_;
+	}
+
 	public static Players Find() {
 		var ch = GameObject.Find("Characters");
 		var pl = ch.GetComponent<Players>();
@@ -55,6 +76,7 @@ public class Players : MonoBehaviour {
 		var track = players_on_track_[next_track];
 		foreach(var other_player in track) {
 			if( PlayerPosition.IsOverlapping(player, other_player) ) {
+				Debug.Log (string.Format("{0} is blocking for {1}", other_player.name, player.name));
 				return player.track_index;
 			}
 		}
@@ -67,6 +89,7 @@ public class Players : MonoBehaviour {
 		foreach(var p in players_on_track_[player.track_index]) {
 			if( p != player && PlayerPosition.IsOverlapping(p, player) ) {
 				p.GetPushed();
+				Debug.Log(string.Format("{0} pushed {1}", player.name, p.name));
 			}
 		}
 	}
@@ -130,7 +153,7 @@ public class Players : MonoBehaviour {
 						dp.Penalize();
 					}
 					else {
-						Debug.Log (dp.name + " ok");
+						// Debug.Log (dp.name + " ok");
 					}
 				}
 			}

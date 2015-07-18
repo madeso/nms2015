@@ -15,16 +15,16 @@ public class PlayerPosition : MonoBehaviour {
 	
 	private SpriteRenderer sprite_renderer_;
 	
-	private int track_index_ = -1;
+	public int donottouch_track_index_ = -1;
 	public int track_index {
 		get {
-			return this.track_index_;
+			return this.donottouch_track_index_;
 		}
 		private set {
 			// Debug.Log (string.Format("Changing track index from {0} to {1}", this.track_index_, value));
 			this.players_.NotifyNewTrack(this, value);
-			this.track_index_ = value;
-			this.sprite_renderer_.sortingOrder = this.players_.GetNumberOfPlayers() - track_index_;
+			this.donottouch_track_index_ = value;
+			this.sprite_renderer_.sortingOrder = this.players_.GetNumberOfPlayers() - this.track_index;
 		}
 	}
 	
@@ -33,7 +33,7 @@ public class PlayerPosition : MonoBehaviour {
 	public KeyCode UpKey;
 	public KeyCode DownKey;
 	
-	private Tweaks tweaks;
+	private Tweaks tweaks_;
 	
 	private float push_timer_ = 0.0f;
 	
@@ -42,16 +42,30 @@ public class PlayerPosition : MonoBehaviour {
 			return this.position_on_track_;
 		}
 	}
+
+	public static Rect CalculatePseudoRect (float postition_on_track, Tweaks tweaks)
+	{
+		return new Rect (postition_on_track - tweaks.PlayerWidth / 2.0f, 0, tweaks.PlayerWidth, 1);
+	}
+
 	
 	public Rect PseudoRect {
 		get {
-			return new Rect(position_on_track_ - this.tweaks.PlayerWidth/2.0f, 0, this.tweaks.PlayerWidth, 1);
+			return CalculatePseudoRect (this.position_on_track_, this.tweaks_);
 		}
 	}
 	private bool penalized_ = false;
 	public void Penalize ()
 	{
 		this.penalized_ = true;
+		PenalizeClearStartPosition ();
+	}
+
+	void PenalizeClearStartPosition ()
+	{
+		this.masher_.Clear ();
+		this.push_timer_ = -1;
+		this.track_index = this.players_.FindFirstFreeTrack (this.track_index, this.start_track_index_);
 	}
 
 	public bool IsBeeingPenalized {
@@ -59,6 +73,8 @@ public class PlayerPosition : MonoBehaviour {
 			return this.penalized_;
 		}
 	}
+
+	int start_track_index_ = -1;
 	
 	public static bool IsOverlapping (PlayerPosition left, PlayerPosition right)
 	{
@@ -68,9 +84,10 @@ public class PlayerPosition : MonoBehaviour {
 	public void Setup (Players players, int index)
 	{
 		this.sprite_renderer_ = this.GetComponent<SpriteRenderer>();
-		this.tweaks = Tweaks.Find();
+		this.tweaks_ = Tweaks.Find();
 		this.players_ = players;
 		this.track_index = index;
+		this.start_track_index_ = index;
 	}
 	
 	void Start() {
@@ -81,16 +98,16 @@ public class PlayerPosition : MonoBehaviour {
 	private float push_speed {
 		get {
 			if( this.push_timer_ <= 0 ) return 0;
-			return this.tweaks.PushSpeed * (this.push_timer_/this.tweaks.PushTime);
+			return this.tweaks_.PushSpeed * (this.push_timer_/this.tweaks_.PushTime);
 		}
 	}
 	
 	public void Update() {
 		if( this.penalized_ ) {
-			this.position_on_track_ -= this.tweaks.PenalizedSpeed * Time.deltaTime;
+			this.position_on_track_ -= this.tweaks_.PenalizedSpeed * Time.deltaTime;
 			if( this.position_on_track_ < 0 ) {
 				this.position_on_track_ = 0;
-				this.push_timer_ = 0;
+				this.PenalizeClearStartPosition();
 				this.penalized_ = false;
 			}
 		}
@@ -120,7 +137,7 @@ public class PlayerPosition : MonoBehaviour {
 	
 	public void GetPushed ()
 	{
-		this.push_timer_ += this.tweaks.PushTime;
+		this.push_timer_ += this.tweaks_.PushTime;
 	}
 
 	public float GetSpeed() {

@@ -13,6 +13,13 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	private bool expecting_left_ = false;
 	private float value_ = 0.0f;
 
+	void Masher.Clear() {
+		this.value_ = 0;
+		this.expecting_left_ = false;
+		this.last_timer_ = 0;
+		this.timer_ = 0;
+	}
+
 	// Use this for initialization
 	void Start () {
 		this.tweaks = Tweaks.Find();
