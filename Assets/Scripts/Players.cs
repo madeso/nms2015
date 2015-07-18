@@ -6,6 +6,9 @@ using System.Collections.Generic;
 /// <summary>
 ///  Global object tracking the players and game logic things
 /// </summary>
+using UnityEngine.Assertions;
+
+
 public class Players : MonoBehaviour {
 
 	public PlayerPosition[] PlayerList;
@@ -95,8 +98,7 @@ public class Players : MonoBehaviour {
 	}
 
 	public void Start() {
-		//UnityEngine.Assert.AreEqual
-		AssertAreEqual(this.StartPositions.Length, this.PlayerList.Length);
+		Assert.AreEqual(this.StartPositions.Length, this.PlayerList.Length);
 		this.players_on_track_ = new List<PlayerPosition>[this.PlayerList.Length];
 		for(int i=0; i<this.PlayerList.Length; ++i) {
 			this.players_on_track_[i] = new List<PlayerPosition>();
@@ -110,10 +112,5 @@ public class Players : MonoBehaviour {
 
 	public void Update() {
 		this.idle_timer_ += Time.deltaTime;
-	}
-
-	private static void AssertAreEqual (int i, int i2)
-	{
-		if( i != i2 ) throw new UnityException("Assert failure");
 	}
 }
