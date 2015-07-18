@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GlobalTwoButtonTweaks : MonoBehaviour {
+public class Tweaks : MonoBehaviour {
 
-	public static GlobalTwoButtonTweaks Find() {
+	public static Tweaks Find() {
 		var go = GameObject.Find("Characters");
-		var tw = go.GetComponent<GlobalTwoButtonTweaks>();
+		var tw = go.GetComponent<Tweaks>();
 		return tw;
 	}
 

@@ -6,7 +6,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	public KeyCode LeftKeyCode = KeyCode.W;
 	public KeyCode RightKeyCode = KeyCode.S;
 	
-	private GlobalTwoButtonTweaks tweaks;
+	private Tweaks tweaks;
 
 	public float timer_;
 	public float last_timer_ = 0.0f;
@@ -15,7 +15,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 
 	// Use this for initialization
 	void Start () {
-		this.tweaks = GlobalTwoButtonTweaks.Find();
+		this.tweaks = Tweaks.Find();
 		this.timer_ = 0.0f;
 	}
 

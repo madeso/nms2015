@@ -22,7 +22,7 @@ public class PlayerPosition : MonoBehaviour {
 	public KeyCode UpKey;
 	public KeyCode DownKey;
 
-	GlobalTwoButtonTweaks tweaks;
+	Tweaks tweaks;
 
 	public float Position {
 		get {
@@ -43,7 +43,7 @@ public class PlayerPosition : MonoBehaviour {
 
 	public void Setup (Players players, int index)
 	{
-		this.tweaks = GlobalTwoButtonTweaks.Find();
+		this.tweaks = Tweaks.Find();
 		this.players_ = players;
 		this.track_index = index;
 	}
