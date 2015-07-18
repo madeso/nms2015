@@ -9,8 +9,8 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	public GlobalTwoButtonTweaks Tweak;
 
 	public float timer_;
-	public float lastDelta_ = 0.0f;
-	private bool left_ = false;
+	public float last_timer_ = 0.0f;
+	private bool expecting_left_ = false;
 	public float value_ = 0.0f;
 
 	// Use this for initialization
@@ -22,13 +22,13 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 		return value_;
 	}
 
-	public float interval;
+	public float interval_;
 
-	public float delta;
+	public float delta_;
 
-	public float beatmach;
+	public float beatmach_;
 
-	public float speedinterval;
+	public float speedinterval_;
 
 	public float RankDelta (float d, float i)
 	{
@@ -37,10 +37,11 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 		var beatmatch = this.Tweak.BeatMatch.Evaluate(interval);
 		var speedinterval = this.Tweak.SpeedInterval.Evaluate(delta);
 
-		this.interval = interval;
-		this.delta = delta;
-		this.beatmach = beatmatch;
-		this.speedinterval = speedinterval;
+		// debugging
+		this.interval_ = interval;
+		this.delta_ = delta;
+		this.beatmach_ = beatmatch;
+		this.speedinterval_ = speedinterval;
 
 		// Debug.Log(string.Format("delta={0}, interval={1}, beatmatch={2}, imatch={3}", delta, interval, beatmatch, speedinterval));
 		return beatmatch * speedinterval;
@@ -51,16 +52,16 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 		this.timer_ += Time.deltaTime;
 		this.value_ -= Time.deltaTime * this.Tweak.DescreaseScale;
 		if( value_ < 0 ) value_ = 0;
-		var down = left_ ? Input.GetKey(this.LeftKeyCode) : Input.GetKey(this.RightKeyCode);
+		var down = expecting_left_ ? Input.GetKey(this.LeftKeyCode) : Input.GetKey(this.RightKeyCode);
 		if( down == false ) return;
-		var delta = Mathf.Abs(timer_)-Mathf.Abs(lastDelta_);
+		var delta = Mathf.Abs(timer_)-Mathf.Abs(last_timer_);
 		this.value_ += this.RankDelta(timer_, delta) * this.Tweak.SpeedScale;
 		if( this.value_ > this.Tweak.MaxSpeed ) {
 			this.value_ = this.Tweak.MaxSpeed;
 			// Debug.Log("Hit roof");
 		}
-		lastDelta_ = this.timer_;
-		left_ = !left_;
+		last_timer_ = this.timer_;
+		expecting_left_ = !expecting_left_;
 		this.timer_ = 0;
 	}
 }

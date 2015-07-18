@@ -3,30 +3,30 @@ using System.Collections;
 
 public class PlayerPosition : MonoBehaviour {
 
-	private float position_ = 0;
+	private float position_on_track_ = 0;
 
-	private int index_;
+	private int track_index_;
 
-	private Masher masher;
+	private Masher masher_;
 
 	public KeyCode UpKey;
 	public KeyCode DownKey;
 
 	public float Position {
 		get {
-			return this.position_;
+			return this.position_on_track_;
 		}
 	}
 
 	public void Setup (Players players, int index)
 	{
 		this.players_ = players;
-		this.index_ = index;
+		this.track_index_ = index;
 	}
 
 	void Start() {
-		this.masher = this.GetComponent<Masher>();
-		if( this.masher == null ) throw new UnityException("no masher component on object");
+		this.masher_ = this.GetComponent<Masher>();
+		if( this.masher_ == null ) throw new UnityException("no masher component on object");
 	}
 
 	public void Update() {
@@ -38,13 +38,13 @@ public class PlayerPosition : MonoBehaviour {
 		if( Input.GetKeyUp(this.DownKey) ) {
 			MoveUp(-1);
 		}
-		position_ += this.masher.GetValue() * Time.deltaTime;
-		this.transform.position = this.players_.GetStartPosition(this.index_) + Vector3.right * position_;
+		position_on_track_ += this.masher_.GetValue() * Time.deltaTime;
+		this.transform.position = this.players_.GetStartPosition(this.track_index_) + Vector3.right * position_on_track_;
 	}
 
 	void MoveUp (int i)
 	{
-		this.index_ = this.players_.Move(index_, i);
+		this.track_index_ = this.players_.Move(track_index_, i);
 	}
 
 	private Players players_;

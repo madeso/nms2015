@@ -15,19 +15,19 @@ public class Players : MonoBehaviour {
 		return this.StartPositions[index_].transform.position;
 	}
 
-	List<PlayerPosition> winners = new List<PlayerPosition>();
+	private List<PlayerPosition> winners_ = new List<PlayerPosition>();
 
 	public bool FeedPosition (PlayerPosition p)
 	{
 		if( p.transform.position.x >= this.End.transform.position.x ) {
-			if( winners.Contains(p) == false ) {
-				winners.Add(p);
+			if( winners_.Contains(p) == false ) {
+				winners_.Add(p);
 				Debug.Log(string.Format("{0} won!", p.name));
 			}
 			return true;
 		}
 
-		return winners.Count > 0;
+		return winners_.Count > 0;
 	}
 
 	public int Move (int p, int i)
