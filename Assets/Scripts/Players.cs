@@ -123,13 +123,15 @@ public class Players : MonoBehaviour {
 			foreach(var dp in judge.detected_players) {
 				dp.is_detected = true;
 
-				var speed = dp.GetSpeed();
-				if( speed > this.tweaks_.SpeedLimmit ) {
-					Debug.Log(string.Format("{0} penalized {1}", dp.name, speed));
-					dp.Penalize();
-				}
-				else {
-					Debug.Log (dp.name + " ok");
+				if( dp.IsBeeingPenalized == false ) {
+					var speed = dp.GetSpeed();
+					if( speed > this.tweaks_.SpeedLimmit ) {
+						Debug.Log(string.Format("{0} penalized {1}", dp.name, speed));
+						dp.Penalize();
+					}
+					else {
+						Debug.Log (dp.name + " ok");
+					}
 				}
 			}
 		}

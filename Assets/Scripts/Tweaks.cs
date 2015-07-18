@@ -22,4 +22,6 @@ public class Tweaks : MonoBehaviour {
 	public float PushSpeed = 1;
 
 	public float SpeedLimmit = 0.6f;
+
+	public float PenalizedSpeed = 2.0f;
 }

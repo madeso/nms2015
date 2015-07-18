@@ -48,11 +48,16 @@ public class PlayerPosition : MonoBehaviour {
 			return new Rect(position_on_track_ - this.tweaks.PlayerWidth/2.0f, 0, this.tweaks.PlayerWidth, 1);
 		}
 	}
-
+	private bool penalized_ = false;
 	public void Penalize ()
 	{
-		this.position_on_track_ = 0.0f;
-		this.push_timer_ = 0.0f;
+		this.penalized_ = true;
+	}
+
+	public bool IsBeeingPenalized {
+		get {
+			return this.penalized_;
+		}
 	}
 	
 	public static bool IsOverlapping (PlayerPosition left, PlayerPosition right)
@@ -81,24 +86,34 @@ public class PlayerPosition : MonoBehaviour {
 	}
 	
 	public void Update() {
-		if( this.players_.FeedPosition(this) ) return;
-		
-		if( Input.GetKeyUp(this.UpKey) ) {
-			ChangeTrack(1);
-		}
-		if( Input.GetKeyUp(this.DownKey) ) {
-			ChangeTrack(-1);
-		}
-		position_on_track_ += this.masher_.GetValue() * Time.deltaTime;
-		if( this.push_timer_ > 0 ) {
-			this.position_on_track_ += this.push_speed * Time.deltaTime;
-			this.push_timer_ -= Time.deltaTime;
-			if( this.push_timer_ <= 0 ) {
+		if( this.penalized_ ) {
+			this.position_on_track_ -= this.tweaks.PenalizedSpeed * Time.deltaTime;
+			if( this.position_on_track_ < 0 ) {
+				this.position_on_track_ = 0;
 				this.push_timer_ = 0;
+				this.penalized_ = false;
 			}
 		}
-		this.players_.OnPlayerMoved(this);
-		
+		else {
+			if( this.players_.FeedPosition(this) ) return;
+			
+			if( Input.GetKeyUp(this.UpKey) ) {
+				ChangeTrack(1);
+			}
+			if( Input.GetKeyUp(this.DownKey) ) {
+				ChangeTrack(-1);
+			}
+			position_on_track_ += this.masher_.GetValue() * Time.deltaTime;
+			if( this.push_timer_ > 0 ) {
+				this.position_on_track_ += this.push_speed * Time.deltaTime;
+				this.push_timer_ -= Time.deltaTime;
+				if( this.push_timer_ <= 0 ) {
+					this.push_timer_ = 0;
+				}
+			}
+			this.players_.OnPlayerMoved(this);
+		}
+
 		// update graphics based on the position
 		this.transform.position = this.players_.GetStartPosition(this.track_index) + Vector3.right * position_on_track_;
 	}
