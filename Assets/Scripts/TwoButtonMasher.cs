@@ -8,10 +8,10 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 	
 	private Tweaks tweaks;
 
-	public float timer_;
-	public float last_timer_ = 0.0f;
+	private float timer_;
+	private float last_timer_ = 0.0f;
 	private bool expecting_left_ = false;
-	public float value_ = 0.0f;
+	private float value_ = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -23,26 +23,12 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 		return value_;
 	}
 
-	public float interval_;
-
-	public float delta_;
-
-	public float beatmach_;
-
-	public float speedinterval_;
-
 	public float RankDelta (float d, float i)
 	{
 		var delta = Mathf.Abs(d);
 		var interval = Mathf.Abs(i);
 		var beatmatch = this.tweaks.BeatMatch.Evaluate(interval);
 		var speedinterval = this.tweaks.SpeedInterval.Evaluate(delta);
-
-		// debugging
-		this.interval_ = interval;
-		this.delta_ = delta;
-		this.beatmach_ = beatmatch;
-		this.speedinterval_ = speedinterval;
 
 		// Debug.Log(string.Format("delta={0}, interval={1}, beatmatch={2}, imatch={3}", delta, interval, beatmatch, speedinterval));
 		return beatmatch * speedinterval;
