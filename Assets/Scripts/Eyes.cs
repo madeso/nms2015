@@ -73,20 +73,23 @@ public class Eyes : MonoBehaviour {
 		renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 	}
 
+
+
 	void UpdateVisionConeMesh (float start, float end, float y)
 	{
 		CreateVisionCone ();
 		var ex = this.gameObject.transform.position.x;
 		var ey = this.gameObject.transform.position.y;
-		var dx = -0.1f;
+		var dx = 0.1f;
 		var mesh = this.visionconeobject_.GetComponent<MeshFilter>().mesh;
 		mesh.Clear();
 		var z = 1;
 		mesh.vertices = new Vector3[] {
-			new Vector3(ex-dx, ey, z), new Vector3(ex+dx, ey, z),
+			new Vector3(ex+dx, ey, z), new Vector3(ex-dx, ey, z),
 			new Vector3(start, y, z), new Vector3(end, y, z)
 		};
-		mesh.uv = new Vector2[] {new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0)};
+		mesh.uv = new Vector2[] {new Vector2(0, 0), new Vector2(0, 1),
+			new Vector2(1, 1), new Vector2(1, 0)};
 		mesh.triangles = new int[] {2, 1, 0, 3, 2, 0};
 		var displacement_x = ex;
 		var displacement_y = ey;
