@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 //using UnityEngine.Assertions;
 
+/// <summary>
+///  Global object tracking the players and game logic things
+/// </summary>
 public class Players : MonoBehaviour {
 
 	public PlayerPosition[] PlayerList;

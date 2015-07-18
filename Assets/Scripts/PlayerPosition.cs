@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Class containing the player data
+/// </summary>
 public class PlayerPosition : MonoBehaviour {
 
 	public float position_on_track_ = 0;
