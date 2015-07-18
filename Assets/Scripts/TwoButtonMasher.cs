@@ -39,7 +39,7 @@ public class TwoButtonMasher : MonoBehaviour, Masher {
 		this.timer_ += Time.deltaTime;
 		this.value_ -= Time.deltaTime * this.tweaks.DescreaseScale;
 		if( value_ < 0 ) value_ = 0;
-		var down = expecting_left_ ? Input.GetKey(this.LeftKeyCode) : Input.GetKey(this.RightKeyCode);
+		var down = expecting_left_ ? Input.GetKeyDown(this.LeftKeyCode) : Input.GetKeyDown(this.RightKeyCode);
 		if( down == false ) return;
 		var delta = Mathf.Abs(timer_)-Mathf.Abs(last_timer_);
 		this.value_ += this.RankDelta(timer_, delta) * this.tweaks.SpeedScale;
