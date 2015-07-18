@@ -619,6 +619,51 @@ Transform:
   - {fileID: 1865157376}
   m_Father: {fileID: 0}
   m_RootOrder: 7
+--- !u!1 &477193270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 477193272}
+  - 114: {fileID: 477193271}
+  m_Layer: 0
+  m_Name: DictatorEyes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &477193271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 477193270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df2f88261b4841a4872d564c70dcd5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VisionConeAngle: 10
+  movement_: 0
+  start_: 0
+  end_: 0
+  y_: 0
+  VisionConeMaterial: {fileID: 2100000, guid: e19c3743d6f9a4beaac40b8505c2c19b, type: 2}
+--- !u!4 &477193272
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 477193270}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.71000004, y: 3.19000006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
 --- !u!1 &639495768
 GameObject:
   m_ObjectHideFlags: 0

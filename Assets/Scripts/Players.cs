@@ -11,11 +11,19 @@ public class Players : MonoBehaviour {
 	public PlayerPosition[] PlayerList;
 	public GameObject[] StartPositions;
 
+	public static Players Find() {
+		var ch = GameObject.Find("Characters");
+		var pl = ch.GetComponent<Players>();
+		return pl;
+	}
+
 	public GameObject End;
 
 	// number of seconds that have elapsed since no input has been given
 	// reset game after some time have elapsed, 30 seconds?
 	private float idle_timer_ = 0;
+
+	public List<PlayerPosition>[] players_on_track_;
 
 	public Vector3 GetStartPosition (int index_)
 	{
@@ -58,8 +66,6 @@ public class Players : MonoBehaviour {
 			}
 		}
 	}
-
-	public List<PlayerPosition>[] players_on_track_;
 
 	public void NotifyNewTrack (PlayerPosition player, int track_index)
 	{
