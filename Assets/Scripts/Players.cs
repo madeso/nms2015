@@ -66,6 +66,11 @@ public class Players : MonoBehaviour {
 		return next_track;
 	}
 
+	public int GetNumberOfPlayers ()
+	{
+		return this.PlayerList.Length;
+	}
+
 	void Start() {
 		//UnityEngine.Assert.AreEqual
 		AssertAreEqual(this.StartPositions.Length, this.PlayerList.Length);

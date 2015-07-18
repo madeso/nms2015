@@ -5,6 +5,8 @@ public class PlayerPosition : MonoBehaviour {
 
 	public float position_on_track_ = 0;
 
+	private SpriteRenderer sprite_renderer_;
+
 	private int track_index_ = -1;
 	public int track_index {
 		get {
@@ -14,6 +16,7 @@ public class PlayerPosition : MonoBehaviour {
 			// Debug.Log (string.Format("Changing track index from {0} to {1}", this.track_index_, value));
 			this.players_.NotifyNewTrack(this, value);
 			this.track_index_ = value;
+			this.sprite_renderer_.sortingOrder = this.players_.GetNumberOfPlayers() - track_index_;
 		}
 	}
 
@@ -43,6 +46,7 @@ public class PlayerPosition : MonoBehaviour {
 
 	public void Setup (Players players, int index)
 	{
+		this.sprite_renderer_ = this.GetComponent<SpriteRenderer>();
 		this.tweaks = Tweaks.Find();
 		this.players_ = players;
 		this.track_index = index;
