@@ -11,6 +11,8 @@ public class StateManager : Singleton<StateManager>
 
 	private void Start()
 	{
+		DontDestroyOnLoad(this.gameObject);
+
 		AudioManager.Instance.PlayMusic();
 		
 		title = GameObject.Find("Title");
@@ -31,6 +33,7 @@ public class StateManager : Singleton<StateManager>
 				break;
 			case GameStates.Poster:
 				Application.LoadLevel("main");
+				state = GameStates.Gameplay;
 				break;
 			case GameStates.Gameplay:
 

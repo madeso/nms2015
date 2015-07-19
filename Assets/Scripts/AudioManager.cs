@@ -11,6 +11,8 @@ public class AudioManager : Singleton<AudioManager>
 	private AudioSource musicSource;
 	private float musicSpeed;
 
+	private Players pl;
+
 	public enum SFX
 	{
 		Step,
@@ -59,13 +61,13 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		if(musicSource.isPlaying)
 		{
-			if(Input.GetKey(KeyCode.Space))
+			pl = Players.Find();
+
+			if(pl != null)
 			{
-				musicSpeed += Time.deltaTime;
-			}
-			else
-			{
-				musicSpeed -= Time.deltaTime;
+				float sp = pl.GetTotalSpeed() * .25f;
+				Debug.Log(sp);
+				musicSpeed = sp;
 			}
 
 			musicSpeed = Mathf.Clamp(musicSpeed, .7f, 1.2f);

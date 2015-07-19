@@ -7,10 +7,13 @@ public class Crowd : MonoBehaviour
 	public Sprite[] crowdSprites;
 	public Color[] colors;
 	public GameObject[] crowdGOs;
+	public bool[] moving;
 
 	void Start ()
 	{
 		crowdGOs = new GameObject[3*10];
+		moving = new bool[3*10];
+
 		int spriteId = 0;
 
 		for(int r=0; r<3; r++)
@@ -27,6 +30,7 @@ public class Crowd : MonoBehaviour
 				newCrowdComponent.transform.localPosition = new Vector3(l*.6f, r*.8f, 0f);
 
 				crowdGOs[spriteId] = newCrowdComponent;
+				moving[spriteId] = false;
 				spriteId++;
 			}
 		}
@@ -44,7 +48,11 @@ public class Crowd : MonoBehaviour
 	{
 		for(int i=0; i<crowdGOs.Length; i++)
 		{
-			crowdGOs[i].transform.DOPunchPosition(new Vector3(0f, .3f, 0f), 1f, 2).SetDelay(Random.Range(0f, .5f));
+			if(moving[i] == false)
+			{
+				crowdGOs[i].transform.DOPunchPosition(new Vector3(0f, .3f, 0f), 1f, 2).SetDelay(Random.Range(0f, .5f));
+				//moving[i] = true;
+			}
 		}
 	}
 }

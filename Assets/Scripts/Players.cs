@@ -35,6 +35,14 @@ public class Players : MonoBehaviour {
 		}
 	}
 
+	public float GetTotalSpeed() {
+		var sum = 0.0f;
+		foreach(var pl in this.PlayerList) {
+			sum += pl.GetSpeed();
+		}
+		return sum;
+	}
+
 	public int FindFirstFreeTrack (int track_index_, int start_track_index_)
 	{
 		if( IsTrackFree(track_index_) ) return track_index_;
@@ -47,6 +55,8 @@ public class Players : MonoBehaviour {
 
 	public static Players Find() {
 		var ch = GameObject.Find("Characters");
+		if(ch == null)
+			return null;
 		var pl = ch.GetComponent<Players>();
 		return pl;
 	}
