@@ -165,7 +165,7 @@ public class Players : MonoBehaviour {
 
 		this.idle_timer_ += Time.deltaTime;
 
-		if( Input.GetKeyDown(KeyCode.R) ) {
+		if( Input.GetKeyDown(KeyCode.Escape) ) {
 			this.ResetGame();
 		}
 
