@@ -61,10 +61,21 @@ public class PlayerPosition : MonoBehaviour {
 		PenalizeClearStartPosition ();
 	}
 
-	void PenalizeClearStartPosition ()
+	void Clear ()
 	{
 		this.masher_.Clear ();
 		this.push_timer_ = -1;
+	}
+
+	public void ResetToStart() {
+		Clear ();
+		this.position_on_track_ = 0;
+		this.track_index = start_track_index_;
+	}
+
+	void PenalizeClearStartPosition ()
+	{
+		Clear ();
 		this.track_index = this.players_.FindFirstFreeTrack (this.track_index, this.start_track_index_);
 	}
 

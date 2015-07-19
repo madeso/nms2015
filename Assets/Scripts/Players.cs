@@ -27,6 +27,14 @@ public class Players : MonoBehaviour {
 		return true;*/
 	}
 
+	public void ResetGame() {
+		Debug.Log("Reseting the gameplay");
+		this.winners_.Clear();
+		foreach(var pl in this.PlayerList) {
+			pl.ResetToStart();
+		}
+	}
+
 	public int FindFirstFreeTrack (int track_index_, int start_track_index_)
 	{
 		if( IsTrackFree(track_index_) ) return track_index_;
@@ -117,6 +125,15 @@ public class Players : MonoBehaviour {
 		return next_track;
 	}
 
+	void CallSetupOnAllPlayers ()
+	{
+		int index = 0;
+		foreach (var pl in PlayerList) {
+			pl.Setup (this, index);
+			++index;
+		}
+	}
+
 	public int GetNumberOfPlayers ()
 	{
 		return this.PlayerList.Length;
@@ -129,11 +146,7 @@ public class Players : MonoBehaviour {
 		for(int i=0; i<this.PlayerList.Length; ++i) {
 			this.players_on_track_[i] = new List<PlayerPosition>();
 		}
-		int index = 0;
-		foreach(var pl in PlayerList) {
-			pl.Setup(this, index);
-			++index;
-		}
+		CallSetupOnAllPlayers ();
 	}
 
 	public Text WinText;
@@ -151,6 +164,10 @@ public class Players : MonoBehaviour {
 			: string.Format("{0} won #nice", StringListCombiner.EnglishAnd.CombineFromEnumerable(this.winners_names));
 
 		this.idle_timer_ += Time.deltaTime;
+
+		if( Input.GetKeyDown(KeyCode.R) ) {
+			this.ResetGame();
+		}
 
 		foreach(var pl in this.PlayerList) {
 			pl.is_detected = false;
