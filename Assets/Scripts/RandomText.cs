@@ -30,11 +30,11 @@ public class RandomText : MonoBehaviour {
 
 	string GenerateRandomString ()
 	{
-		return Select("Obey", "Dictator-sloth rules!", "Do not break the\nspeed limit", "Consume",
+		return Select("Obey", "Dictator-sloth rules!", "Do not break the\nspeed limit", "Consume!!",
 		              "Marry and reproduce!", "#plutoflybye", "Mega welcome!!!", "Magnetic sausages?",
-		              "No independent\nthought", "Sleep 8 hours!", "Work 8 hours", "Play 8 hours",
-		              "Buy!", "Stay asleep!", "Submit", "Do not question\nauthority!",
-		              "Watch T.V", "No imagination", "OBEY!!!", "#nomoresweden"
+		              "No independent\nthought!", "Sleep 8 hours!", "Work 8 hours!", "Play 8 hours!",
+		              "Buy!", "Stay asleep!", "Submit!", "Do not question\nauthority!", "Obey and conform",
+		              "Watch T.V", "No imagination!", "OBEY!!!", "#nomoresweden", "Obey the sloths", "The sloths are\nyour friends"
 		              );
 	}
 	
